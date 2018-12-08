@@ -1,10 +1,11 @@
 FROM python:3.7
 MAINTAINER ioriiod0@gmail.com
 
-RUN pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com numpy
-RUN pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com aiohttp
-RUN pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com sanic
-RUN pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com schema
+# RUN pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com numpy
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host=mirrors.aliyun.com numpy aiohttp sanic schema
+# RUN pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com aiohttp
+# RUN pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com sanic
+# RUN pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com schema
 
 ADD . /marathon
 RUN cd /marathon && python setup.py install

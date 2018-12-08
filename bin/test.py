@@ -20,12 +20,12 @@ REPLAY_URL = '/replays/%s'
 def run_test(n):
     name = "user%s" % n
     for i in range(10):
-        print "user",name,"round",i
-        print ENV_URL % ENV
+        print("user",name,"round",i)
+        print(ENV_URL % ENV)
         res = requests.post(ENV_URL % ENV,data=json.dumps({"name":name}))
         assert res.status_code == 200
         data = res.json()
-        print data
+        print(data)
         _id = data['id']
 
         for j in range(400):
@@ -40,7 +40,7 @@ def get_billboard():
     data = res.json()
 
     for x in data['data']:
-        print x
+        print(x)
 
 
 def get_replay(_id):
@@ -48,7 +48,7 @@ def get_replay(_id):
     assert res.status_code == 200
     data = res.json()['replay']
     for x in data:
-        print x
+        print(x)
 
 
 if __name__ == '__main__':

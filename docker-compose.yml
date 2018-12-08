@@ -5,9 +5,9 @@ backend:
   # restart: always
   hostname: bankend
   container_name: bankend
-  links:
-    - test1
-    - test2
+  # links:
+    # - test1
+    # - test2
 
 frontend:
   build: ./frontend
@@ -20,15 +20,15 @@ frontend:
     - "5555:80"
 
   
-test1:
-  build: .
-  command: python bin/test_server.py 1000
-  container_name: test1
-  hostname: test1
+# test1:
+#   build: .
+#   command: python bin/test_server.py 1000
+#   container_name: test1
+#   hostname: test1
 
-test2:
-  build: .
-  command: python bin/test_server.py 1023
-  container_name: test2
-  hostname: test2
+# test2:
+#   build: .
+#   command: python bin/test_server.py 1023
+#   container_name: test2
+#   hostname: test2
 
