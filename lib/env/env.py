@@ -23,6 +23,12 @@ class Player(object):
 		self.value = value
 		self.score = score
 
+	def reset(self):
+		self.x = self.home_x
+		self.y = self.home_y
+		self.n_jobs = 0
+		self.value = 0
+		self.score = 0
 
 	def __str__(self):
 		return str(self.__dict__)
@@ -39,10 +45,14 @@ class Env(object):
 		self.stopped = False
 		self.done = False
 		self.create_at = time.time()
+		self.score = 0
+		self.steps = 0
+		self.replay = []
 
 		self.player1 = Player(p1_name,self.conf['player1_home'],0,0,0)
 		self.player2 = Player(p2_name,self.conf['player2_home'],0,0,0)
 		self.current_player = self.player1
+
 
 
 	def _gen_world(self):
@@ -95,9 +105,14 @@ class Env(object):
 		self._gen_world()
 		self._gen_wall()
 		self._gen_job(self.conf['num_jobs'],lambda : self.rand.randint(*self.conf['value_range']))
+		self.stopped = False
+		self.done = False
 		self.score = 0
 		self.steps = 0
 		self.replay = []
+		self.player1.reset()
+		self.player2.reset()
+		self.current_player = self.player1
 		return self.get_state()
 
 
@@ -148,7 +163,7 @@ class Env(object):
 		else: #stay..
 			x,y = p.x,p.y
 
-		valid = (0 <= x < world_size) and (0 <= y < world_size) and (self.walls[x][y] == 0) and (x,y) not in ((o.x,o.y),(o.home_x,o.home_y))
+		valid = (0 <= x < world_size) and (0 <= y < world_size) and (self.walls[x][y] == 0) and (x,y) != (o.home_x,o.home_y)
 
 		if valid:
 			p.x = x
@@ -225,8 +240,8 @@ if __name__ == '__main__':
 		'capacity': 10,
 		'player1_home': (5,5),
 		'player2_home': (6,6),
-		'num_walls': 3,
-		'num_jobs': 4,
+		'num_walls': 24,
+		'num_jobs': 24,
 		'value_range': (6,12),
 		'max_steps': 200
 	}
@@ -234,7 +249,7 @@ if __name__ == '__main__':
 	# p2_actions = ['D','D','U','R','L','R','U','D','D']
 	p1_actions = ['D','R','R','D','R','D','D','D']
 	p2_actions = ['S','U','U','L','U','U']
-	env = Env("","p1","p2",conf,random.Random(10))
+	env = Env("","p1","p2",conf,random.Random(20))
 	env.reset()
 	env.render()
 	while True:
@@ -262,5 +277,5 @@ if __name__ == '__main__':
 		
 		if env.done:
 			break
-		time.sleep(0.3)
+		time.sleep(0.1)
 	# env.step()
