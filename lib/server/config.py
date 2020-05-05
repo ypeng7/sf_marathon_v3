@@ -12,6 +12,7 @@ ENV_CONF = {
     'max_steps': 200
 }
 
-REPLAY_DIR = "/replays"
+# REPLAY_DIR = "/replays"
+REPLAY_DIR = "/Users/st491/LocalStore/tmp/competition3_replay"
 TIMEOUT = 1.5
 RETRY = 20
